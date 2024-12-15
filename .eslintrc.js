@@ -30,5 +30,8 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off',
         'no-underscore-dangle': 'off',
         'global-require': 0,
+        'jsx-quotes': ['error', 'prefer-single'],
+        'max-len': ["error", { "code": 120 }],
+        camelcase: 'warn',
     },
 };

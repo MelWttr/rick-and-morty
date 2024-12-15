@@ -3,10 +3,12 @@
     "outDir": "./dist/",
     "noImplicitAny": true,
     "module": "es6",
-    "target": "es5",
-    "jsx": "react",
+    "target": "es6",
+    "jsx": "react-jsx",
     "allowJs": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "types": ["react"]
   }
 }

@@ -1,0 +1,17 @@
+.nav {
+    padding: 1rem 1.5rem;
+}
+
+.nav-list {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-link {
+    color: #000;
+    font-size: 18px;
+}
+
+.active {
+    color: red;
+}
