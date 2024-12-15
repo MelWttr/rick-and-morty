@@ -4,11 +4,13 @@ import { AppRoute, CategoryKind, DetailedKind } from './constants';
 import { Characters } from './pages/Characters/Characters';
 import { Episodes } from './pages/Episodes/Episodes';
 import { Locations } from './pages/Locations/Locations';
-import { Detailed } from './pages/Detailed/Detailed';
 import characters from './data/characters.json';
 import episode from './data/episode.json';
 import location from './data/location.json';
-import { CardProps } from './components/Card/Card';
+import { CharacterCard } from './components/Card/CharacterCard';
+import { EpisodeCard } from './components/Card/EpisodeCard';
+import { LocationCard } from './components/Card/LocationCard';
+import { Detailed } from './pages/Detailed/Detailed';
 
 export function App() {
     return (
@@ -22,15 +24,15 @@ export function App() {
 
             <Route
                 path={AppRoute.Detailed(DetailedKind.Character)}
-                element={<Detailed items={characters as CardProps[]} kind={DetailedKind.Character} />}
+                element={<Detailed items={characters} CardComponent={CharacterCard}/>}
             />
             <Route
-                path={AppRoute.Category(DetailedKind.Episode)}
-                element={<Detailed items={episode as CardProps[]} kind={DetailedKind.Episode} />}
+                path={AppRoute.Detailed(DetailedKind.Episode)}
+                element={<Detailed items={episode} CardComponent={EpisodeCard}/>}
             />
             <Route
-                path={AppRoute.Category(DetailedKind.Location)}
-                element={<Detailed items={location as CardProps[]} kind={DetailedKind.Location} />}
+                path={AppRoute.Detailed(DetailedKind.Location)}
+                element={<Detailed items={location} CardComponent={LocationCard}/>}
             />
         </Routes>
     );

@@ -1,23 +1,31 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { useParams } from 'react-router-dom';
+import cls from './Detailed.module.scss';
+import { Character } from '../../components/Card/CharacterCard';
+import { Episode } from '../../components/Card/EpisodeCard';
+import { Location } from '../../components/Card/LocationCard';
 import { Layout } from '../../components/Layout/Layout';
-import { Card, CardProps, CardType } from '../../components/Card/Card';
-import { DetailedKind } from '../../constants';
 
-interface DetailedProps {
-    items: CardType[];
-    kind: typeof DetailedKind[keyof typeof DetailedKind];
+type CardType = Character | Episode | Location;
+
+interface CardComponentProps {
+    item: CardType;
 }
 
-const findItemById = <T extends CardType >(items: T[], id: number | undefined): T => {
-    if (id === undefined) { return undefined; }
+interface CardLayoutProps {
+    items: CardType[];
+    CardComponent: FC<CardComponentProps>;
+}
+
+const findItemById = (items: CardType[], id: number | undefined): CardType | undefined => {
+    if (id === undefined) {
+        return undefined;
+    }
     return items.find((item) => item.id === id);
 };
 
-const DetailedComponent: FC<DetailedProps> = ({ items, kind }) => {
+export const Detailed: FC<CardLayoutProps> = ({ items, CardComponent }) => {
     const { id } = useParams<{ id: string }>();
-    console.log(id);
-    
     const item = findItemById(items, Number(id));
     if (!item) {
         return (
@@ -28,14 +36,16 @@ const DetailedComponent: FC<DetailedProps> = ({ items, kind }) => {
             </Layout>
         );
     }
-
     return (
         <Layout>
             <main>
-                <Card kind={kind} item={item} />
+                <article className={cls.article}>
+                    <h1>{item.name}</h1>
+                    <CardComponent item={item} />
+                </article>
+
             </main>
         </Layout>
+
     );
 };
-
-export const Detailed = memo(DetailedComponent);
