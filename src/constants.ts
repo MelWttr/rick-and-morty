@@ -7,5 +7,5 @@ export const AppRoute = {
     Character: '/character/:id',
     Episode: '/episode/:id',
     Location: '/location/:id',
-    NotFound: '/not-found',
+    NotFound: '*',
 } as const;

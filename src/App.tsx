@@ -9,6 +9,7 @@ import { EpisodeCard } from './components/Card/EpisodeCard';
 import { LocationCard } from './components/Card/LocationCard';
 import { Detailed } from './pages/Detailed/Detailed';
 import { Category } from './pages/Category/Category';
+import { NotFound } from './pages/NotFound/NotFound';
 
 export function App() {
     return (
@@ -32,6 +33,7 @@ export function App() {
             <Route path={AppRoute.Character} element={<Detailed items={characters} CardComponent={CharacterCard} />} />
             <Route path={AppRoute.Episode} element={<Detailed items={episode} CardComponent={EpisodeCard} />} />
             <Route path={AppRoute.Location} element={<Detailed items={location} CardComponent={LocationCard} />} />
+            <Route path={AppRoute.NotFound} element={<NotFound />} />
         </Routes>
     );
 }
