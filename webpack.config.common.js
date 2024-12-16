@@ -3,12 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: './index.tsx',
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
         clean: true,
     },
     resolve: {
@@ -35,7 +38,7 @@ module.exports = {
             {
                 test: /\.module\.s[ac]ss$/i,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
@@ -59,7 +62,11 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 exclude: /\.module\.s[ac]ss$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+                use: [
+                    isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+                    'css-loader',
+                    'sass-loader',
+                ],
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
