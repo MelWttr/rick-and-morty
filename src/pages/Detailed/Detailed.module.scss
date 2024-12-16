@@ -1,7 +1,19 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .article {
+    padding: 20px 0;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    border: 1px solid gray;
+    gap: 1rem;
+    border: 1px solid var(--color-border);
     border-radius: 20px;
+}
+
+.title {
+    padding: 0 1.5rem;
 }

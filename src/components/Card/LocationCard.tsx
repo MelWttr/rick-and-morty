@@ -12,17 +12,14 @@ export interface LocationProps {
 }
 
 export const LocationCard: FC<LocationProps> = ({ item }) => (
-    <ul>
+    <ul className={cls.list}>
         {item.type && (
             <li>
-                Тип:
-                {item.type}
+                {`Тип: ${item.type}`}
             </li>
-
         )}
         <li>
-            Измерение:
-            {item.dimension}
+            {`Измерение: ${item.dimension}`}
         </li>
     </ul>
 

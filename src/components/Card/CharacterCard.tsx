@@ -17,23 +17,19 @@ export interface CharacterProps {
 export const CharacterCard: FC<CharacterProps> = ({ item }) => (
     <>
         {item.image && <img className={cls.image} src={item.image} alt={item.name} />}
-        <ul>
+        <ul className={cls.list}>
             <li>
-                Статус:
-                {item.status}
+                {`Статус: ${item.status}`}
             </li>
             <li>
-                Вид:
-                {item.species}
+                {`Вид: ${item.species}`}
             </li>
             <li>
-                Пол:
-                {item.gender}
+                {`Пол: ${item.gender}`}
             </li>
             {item.type && (
                 <li>
-                    Тип:
-                    {item.type}
+                    {`Тип: ${item.type}`}
                 </li>
             )}
         </ul>

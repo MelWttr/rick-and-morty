@@ -38,9 +38,9 @@ export const Detailed: FC<CardLayoutProps> = ({ items, CardComponent }) => {
     }
     return (
         <Layout>
-            <main>
+            <main className={cls.container}>
                 <article className={cls.article}>
-                    <h1>{item.name}</h1>
+                    <h1 className={cls.title}>{item.name}</h1>
                     <CardComponent item={item} />
                 </article>
 

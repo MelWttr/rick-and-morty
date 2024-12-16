@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
-import { AppRoute, CategoryKind } from '../../constants';
+import { AppRoute } from '../../constants';
 import cls from './Header.module.scss';
 
 const getLinkClassname = ({ isActive }: { isActive: boolean }): string => cn('nav-link', { [cls.active]: isActive });
@@ -17,7 +17,7 @@ export const Header: FC = memo(() => (
                 </li>
                 <li className={cls['nav-item']}>
                     <NavLink
-                        to={AppRoute.Category(CategoryKind.Characters)}
+                        to={AppRoute.Characters}
                         className={getLinkClassname}
                     >
                         Персонажи
@@ -25,7 +25,7 @@ export const Header: FC = memo(() => (
                 </li>
                 <li className={cls['nav-item']}>
                     <NavLink
-                        to={AppRoute.Category(CategoryKind.Locations)}
+                        to={AppRoute.Locations}
                         className={getLinkClassname}
                     >
                         Расположение
@@ -33,7 +33,7 @@ export const Header: FC = memo(() => (
                 </li>
                 <li className={cls['nav-item']}>
                     <NavLink
-                        to={AppRoute.Category(CategoryKind.Episodes)}
+                        to={AppRoute.Episodes}
                         className={getLinkClassname}
                     >
                         Эпизоды

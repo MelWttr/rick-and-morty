@@ -12,14 +12,12 @@ export interface EpisodeProps {
 }
 
 export const EpisodeCard: FC<EpisodeProps> = ({ item }) => (
-    <ul>
+    <ul className={cls.list}>
         <li>
-            Дата выхода:
-            {item.air_date}
+            {`Дата выхода: ${item.air_date}`}
         </li>
         <li>
-            Эпизод:
-            {item.episode}
+            {`Эпизод: ${item.episode}`}
         </li>
     </ul>
 );
