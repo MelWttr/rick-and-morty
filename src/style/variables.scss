@@ -9,4 +9,7 @@
     --color-gray-text: #868e96;
     --color-blue: #228be6;
     --color-input-disabled-bg: #f1f3f5;
+    --input-radius: 0.25rem;
+    --input-height: 2.25rem;
+    --input-padding: calc(var(--input-height) / 3);
 }

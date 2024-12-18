@@ -1,10 +1,11 @@
 import {
-    ComponentType, JSX, useEffect, useState,
+    JSX, useEffect, useState,
 } from 'react';
 import { generatePath, Link, useSearchParams } from 'react-router-dom';
 import { Layout } from '../../components/Layout/Layout';
 import cls from './Category.module.scss';
 import { Sort } from '../../icons/Sort';
+import { Button } from '../../components/Button/Button';
 
 export interface ICategory {
     id: number;
@@ -48,10 +49,9 @@ export const Category = <T extends ICategory>(props: CategoryProps<T>): JSX.Elem
             <main>
                 <h1 className={cls.title}>{title}</h1>
                 <div className={cls.options}>
-                    <button onClick={handleSortClick} className={cls['sort-button']} type='button'>
-                        Дата создания
+                    <Button onClick={handleSortClick} text='Дата создания'>
                         <Sort />
-                    </button>
+                    </Button>
                 </div>
                 <ul className={cls.container}>
                     {categories.map((category: T) => (
