@@ -4,7 +4,6 @@ import cls from './Detailed.module.scss';
 import { Character } from '../../components/Card/CharacterCard';
 import { Episode } from '../../components/Card/EpisodeCard';
 import { Location } from '../../components/Card/LocationCard';
-import { Layout } from '../../components/Layout/Layout';
 
 type CardType = Character | Episode | Location;
 
@@ -29,23 +28,19 @@ export const Detailed: FC<CardLayoutProps> = ({ items, CardComponent }) => {
     const item = findItemById(items, Number(id));
     if (!item) {
         return (
-            <Layout>
-                <main>
-                    <h1>Элемент с указанным ID не найден.</h1>
-                </main>
-            </Layout>
+            <main>
+                <h1>Элемент с указанным ID не найден.</h1>
+            </main>
         );
     }
     return (
-        <Layout>
-            <main className={cls.container}>
-                <article className={cls.article}>
-                    <h1 className={cls.title}>{item.name}</h1>
-                    <CardComponent item={item} />
-                </article>
+        <main className={cls.container}>
+            <article className={cls.article}>
+                <h1 className={cls.title}>{item.name}</h1>
+                <CardComponent item={item} />
+            </article>
 
-            </main>
-        </Layout>
+        </main>
 
     );
 };

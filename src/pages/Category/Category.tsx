@@ -2,7 +2,6 @@ import {
     JSX, useEffect, useState,
 } from 'react';
 import { generatePath, Link, useSearchParams } from 'react-router-dom';
-import { Layout } from '../../components/Layout/Layout';
 import cls from './Category.module.scss';
 import { Sort } from '../../icons/Sort';
 import { Button } from '../../components/Button/Button';
@@ -45,27 +44,25 @@ export const Category = <T extends ICategory>(props: CategoryProps<T>): JSX.Elem
     };
 
     return (
-        <Layout>
-            <main>
-                <h1 className={cls.title}>{title}</h1>
-                <div className={cls.options}>
-                    <Button onClick={handleSortClick} text='Дата создания'>
-                        <Sort />
-                    </Button>
-                </div>
-                <ul className={cls.container}>
-                    {categories.map((category: T) => (
-                        <li key={category.id} className={cls.item}>
-                            <Link
-                                key={category.id}
-                                to={generatePath(url, { id: category.id.toString() })}
-                            >
-                                {category.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </main>
-        </Layout>
+        <main>
+            <h1 className={cls.title}>{title}</h1>
+            <div className={cls.options}>
+                <Button onClick={handleSortClick} text='Дата создания'>
+                    <Sort />
+                </Button>
+            </div>
+            <ul className={cls.container}>
+                {categories.map((category: T) => (
+                    <li key={category.id} className={cls.item}>
+                        <Link
+                            key={category.id}
+                            to={generatePath(url, { id: category.id.toString() })}
+                        >
+                            {category.name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </main>
     );
 };

@@ -1,17 +1,10 @@
-import { FC, ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import cls from './Layout.module.scss';
 
-interface LayoutProps {
-    children: ReactNode
-}
-
-export const Layout: FC<LayoutProps> = (props) => {
-    const { children } = props;
-    return (
-        <div className={cls.container}>
-            <Header />
-            {children}
-        </div>
-    );
-};
+export const Layout = () => (
+    <div className={cls.container}>
+        <Header />
+        <Outlet />
+    </div>
+);
