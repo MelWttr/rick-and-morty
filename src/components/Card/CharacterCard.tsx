@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import cls from './Card.module.scss';
 import { ICategory } from '../../pages/Category/Category';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 export type Character = ICategory & {
     status: string;
@@ -15,7 +16,7 @@ export interface CharacterProps {
 }
 
 export const CharacterCard: FC<CharacterProps> = ({ item }) => (
-    <>
+    <ErrorBoundary>
         {item.image && <img className={cls.image} src={item.image} alt={item.name} />}
         <ul className={cls.list}>
             <li>
@@ -33,5 +34,5 @@ export const CharacterCard: FC<CharacterProps> = ({ item }) => (
                 </li>
             )}
         </ul>
-    </>
+    </ErrorBoundary>
 );

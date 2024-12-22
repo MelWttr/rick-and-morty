@@ -5,6 +5,7 @@ import { generatePath, Link, useSearchParams } from 'react-router-dom';
 import cls from './Category.module.scss';
 import { Sort } from '../../icons/Sort';
 import { Button } from '../../components/Button/Button';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 
 export interface ICategory {
     id: number;
@@ -51,18 +52,20 @@ export const Category = <T extends ICategory>(props: CategoryProps<T>): JSX.Elem
                     <Sort />
                 </Button>
             </div>
-            <ul className={cls.container}>
-                {categories.map((category: T) => (
-                    <li key={category.id} className={cls.item}>
-                        <Link
-                            key={category.id}
-                            to={generatePath(url, { id: category.id.toString() })}
-                        >
-                            {category.name}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+            <ErrorBoundary>
+                <ul className={cls.container}>
+                    {categories.map((category: T) => (
+                        <li key={category.id} className={cls.item}>
+                            <Link
+                                key={category.id}
+                                to={generatePath(url, { id: category.id.toString() })}
+                            >
+                                {category.name}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </ErrorBoundary>
         </main>
     );
 };
