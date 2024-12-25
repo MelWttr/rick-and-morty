@@ -1,15 +1,7 @@
 import { FC } from 'react';
 import cls from './Card.module.scss';
-import { ICategory } from '../../pages/Category/Category';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-
-export type Character = ICategory & {
-    status: string;
-    species: string;
-    type: string;
-    gender: string;
-    image: string;
-};
+import { Character } from '../../interfaces/character';
 
 export interface CharacterProps {
     item: Character;

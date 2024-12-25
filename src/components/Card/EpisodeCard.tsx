@@ -1,12 +1,7 @@
 import { FC } from 'react';
 import cls from './Card.module.scss';
-import { ICategory } from '../../pages/Category/Category';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-
-export type Episode = ICategory & {
-    air_date: string;
-    episode: string;
-};
+import { Episode } from '../../interfaces/episode';
 
 export interface EpisodeProps {
     item: Episode;

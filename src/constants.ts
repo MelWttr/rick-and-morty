@@ -19,3 +19,11 @@ export const Errors = {
     Password: `Пароль не должен быть меньше ${passwordMinLength} символов`,
     Empty: 'Поле обязательно',
 } as const;
+
+const baseUrl = 'https://rickandmortyapi.com/api/';
+
+export const apiUrls = {
+    character: `${baseUrl}character`,
+    location: `${baseUrl}location`,
+    episode: `${baseUrl}episode`,
+} as const;

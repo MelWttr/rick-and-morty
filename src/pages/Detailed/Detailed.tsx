@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import cls from './Detailed.module.scss';
-import { Character } from '../../components/Card/CharacterCard';
-import { Episode } from '../../components/Card/EpisodeCard';
-import { Location } from '../../components/Card/LocationCard';
+import { Location } from '../../interfaces/location';
+import { Character } from '../../interfaces/character';
+import { Episode } from '../../interfaces/episode';
+import { useGetData } from '../../hooks/useGetData';
+import { Loader } from '../../components/Loader/Loader';
 
 type CardType = Character | Episode | Location;
 
@@ -12,7 +14,7 @@ interface CardComponentProps {
 }
 
 interface CardLayoutProps {
-    items: CardType[];
+    url: string;
     CardComponent: FC<CardComponentProps>;
 }
 
@@ -23,10 +25,14 @@ const findItemById = (items: CardType[], id: number | undefined): CardType | und
     return items.find((item) => item.id === id);
 };
 
-export const Detailed: FC<CardLayoutProps> = ({ items, CardComponent }) => {
+export const Detailed: FC<CardLayoutProps> = ({ url, CardComponent }) => {
     const { id } = useParams<{ id: string }>();
-    const item = findItemById(items, Number(id));
-    if (!item) {
+
+    const { data, loading } = useGetData<Location | Character | Episode>({
+        url: `${url}/${id}`,
+    });
+
+    if (!data) {
         return (
             <main>
                 <h1>Элемент с указанным ID не найден.</h1>
@@ -35,10 +41,16 @@ export const Detailed: FC<CardLayoutProps> = ({ items, CardComponent }) => {
     }
     return (
         <main className={cls.container}>
-            <article className={cls.article}>
-                <h1 className={cls.title}>{item.name}</h1>
-                <CardComponent item={item} />
-            </article>
+            {
+                loading
+                    ? <Loader />
+                    : (
+                        <article className={cls.article}>
+                            <h1 className={cls.title}>{data.name}</h1>
+                            <CardComponent item={data} />
+                        </article>
+                    )
+            }
 
         </main>
 

@@ -1,12 +1,7 @@
 import { FC } from 'react';
 import cls from './Card.module.scss';
-import { ICategory } from '../../pages/Category/Category';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-
-export type Location = ICategory & {
-    type: string;
-    dimension: string;
-};
+import { Location } from '../../interfaces/location';
 
 export interface LocationProps {
     item: Location;
