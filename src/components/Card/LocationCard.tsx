@@ -1,26 +1,24 @@
 import { FC } from 'react';
 import cls from './Card.module.scss';
-import { ICategory } from '../../pages/Category/Category';
-
-export type Location = ICategory & {
-    type: string;
-    dimension: string;
-};
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { Location } from '../../interfaces/location';
 
 export interface LocationProps {
     item: Location;
 }
 
 export const LocationCard: FC<LocationProps> = ({ item }) => (
-    <ul className={cls.list}>
-        {item.type && (
+    <ErrorBoundary>
+        <ul className={cls.list}>
+            {item.type && (
+                <li>
+                    {`Тип: ${item.type}`}
+                </li>
+            )}
             <li>
-                {`Тип: ${item.type}`}
+                {`Измерение: ${item.dimension}`}
             </li>
-        )}
-        <li>
-            {`Измерение: ${item.dimension}`}
-        </li>
-    </ul>
+        </ul>
+    </ErrorBoundary>
 
 );

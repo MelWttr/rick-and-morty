@@ -31,7 +31,8 @@ module.exports = {
         'no-underscore-dangle': 'off',
         'global-require': 0,
         'jsx-quotes': ['error', 'prefer-single'],
-        'max-len': ["error", { "code": 120 }],
+        'max-len': ['error', { code: 120 }],
         camelcase: 'warn',
+        'react/button-has-type': 'off',
     },
 };
