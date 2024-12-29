@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import cls from './Detailed.module.scss';
-import { Location } from '../../interfaces/location';
-import { Character } from '../../interfaces/character';
-import { Episode } from '../../interfaces/episode';
-import { useGetData } from '../../hooks/useGetData';
-import { Loader } from '../../components/Loader/Loader';
+import {
+    useGetData, Location, Character, Episode,
+} from '../../entities';
+import { Loader } from '../../shared';
 
 type CardType = Character | Episode | Location;
 
@@ -17,13 +16,6 @@ interface CardLayoutProps {
     url: string;
     CardComponent: FC<CardComponentProps>;
 }
-
-const findItemById = (items: CardType[], id: number | undefined): CardType | undefined => {
-    if (id === undefined) {
-        return undefined;
-    }
-    return items.find((item) => item.id === id);
-};
 
 export const Detailed: FC<CardLayoutProps> = ({ url, CardComponent }) => {
     const { id } = useParams<{ id: string }>();

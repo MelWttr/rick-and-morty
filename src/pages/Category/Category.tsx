@@ -3,16 +3,12 @@ import {
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import cls from './Category.module.scss';
-import { Sort } from '../../icons/Sort';
-import { Button } from '../../components/Button/Button';
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import { useGetData } from '../../hooks/useGetData';
-import { apiUrls } from '../../constants';
-import { Location, LocationResponse } from '../../interfaces/location';
-import { Character, CharacterResponse } from '../../interfaces/character';
-import { Episode, EpisodeResponse } from '../../interfaces/episode';
-import { CategoryItems } from './CategoryItems';
-import { Loader } from '../../components/Loader/Loader';
+import {
+    Loader, ErrorBoundary, Sort, Button, apiUrls,
+} from '../../shared';
+import {
+    CategoryType, useGetData, LocationResponse, CharacterResponse, EpisodeResponse, ItemsList,
+} from '../../entities';
 
 interface CategoryProps {
     title: string;
@@ -21,7 +17,6 @@ interface CategoryProps {
 }
 
 type SortType = 'asc' | 'desc';
-export type CategoryType = Episode | Location | Character
 
 const sortCategories = (categories: CategoryType[], type: SortType): CategoryType[] => (
     [...categories].sort((a, b) => {
@@ -87,7 +82,7 @@ export const Category = (props: CategoryProps): JSX.Element => {
                 </Button>
             </div>
             <ErrorBoundary>
-                <CategoryItems
+                <ItemsList
                     ref={lastItemRef}
                     items={sortedCategories}
                     url={url}

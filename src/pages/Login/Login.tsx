@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import cls from './Login.module.scss';
-import { LoginForm } from '../../components/LoginForm/LoginForm';
+import { LoginForm } from '../../features';
 
 const LoginComponent: FC = () => (
     <main className={cls.container}>
