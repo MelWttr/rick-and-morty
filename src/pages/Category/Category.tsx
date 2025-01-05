@@ -33,6 +33,13 @@ export const Category = (props: CategoryProps): JSX.Element => {
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const created = searchParams.get('created') as SortType;
+
+    useEffect(() => {
+        setCategories([]);
+        setPageNumber(1);
+        setHasMore(true);
+    }, [url]);
+
     const { data, loading } = useGetData<LocationResponse | CharacterResponse | EpisodeResponse>({
         url: getDataUrl,
         page: pageNumber,

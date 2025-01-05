@@ -8,7 +8,12 @@ import { AuthProvider } from '../features';
 const Home = lazy(() => import('../pages/Home/Home').then((module) => ({ default: module.Home })));
 const Login = lazy(() => import('../pages/Login/Login').then((module) => ({ default: module.Login })));
 const Detailed = lazy(() => import('../pages/Detailed/Detailed').then((module) => ({ default: module.Detailed })));
-const Category = lazy(() => import('../pages/Category/Category').then((module) => ({ default: module.Category })));
+const CharacterCategory = lazy(() => import('../pages/Category/CharacterCategory')
+    .then((module) => ({ default: module.CharacterCategory })));
+const EpisodeCategory = lazy(() => import('../pages/Category/EpisodeCategory')
+    .then((module) => ({ default: module.EpisodeCategory })));
+const LocationCategory = lazy(() => import('../pages/Category/LocationCategory')
+    .then((module) => ({ default: module.LocationCategory })));
 const NotFound = lazy(() => import('../pages/NotFound/NotFound').then((module) => ({ default: module.NotFound })));
 const CharacterCard = lazy(() => import('../entities/Card/CharacterCard')
     .then((module) => ({ default: module.CharacterCard })));
@@ -30,11 +35,7 @@ export function App() {
                                 path={AppRoute.Characters}
                                 element={(
                                     <PrivateRoute>
-                                        <Category
-                                            title='Персонажи'
-                                            getDataUrl={apiUrls.character}
-                                            url={AppRoute.Character}
-                                        />
+                                        <CharacterCategory />
                                     </PrivateRoute>
                                 )}
                             />
@@ -42,7 +43,7 @@ export function App() {
                                 path={AppRoute.Episodes}
                                 element={(
                                     <PrivateRoute>
-                                        <Category title='Эпизоды' getDataUrl={apiUrls.episode} url={AppRoute.Episode} />
+                                        <EpisodeCategory />
                                     </PrivateRoute>
                                 )}
                             />
@@ -50,11 +51,7 @@ export function App() {
                                 path={AppRoute.Locations}
                                 element={(
                                     <PrivateRoute>
-                                        <Category
-                                            title='Локации'
-                                            getDataUrl={apiUrls.location}
-                                            url={AppRoute.Location}
-                                        />
+                                        <LocationCategory />
                                     </PrivateRoute>
                                 )}
                             />
