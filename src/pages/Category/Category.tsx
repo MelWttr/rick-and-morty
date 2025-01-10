@@ -1,71 +1,101 @@
 import {
-    ComponentType, JSX, useEffect, useState,
+    JSX, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
-import { generatePath, Link, useSearchParams } from 'react-router-dom';
-import { Layout } from '../../components/Layout/Layout';
+import { useSearchParams } from 'react-router-dom';
 import cls from './Category.module.scss';
-import { Sort } from '../../icons/Sort';
+import {
+    Loader, ErrorBoundary, Sort, Button, apiUrls,
+} from '../../shared';
+import {
+    CategoryType, useGetData, LocationResponse, CharacterResponse, EpisodeResponse, ItemsList,
+} from '../../entities';
 
-export interface ICategory {
-    id: number;
-    name: string;
-    created: string;
-}
-
-interface CategoryProps<T> {
+interface CategoryProps {
     title: string;
-    categories: T[];
     url: string;
+    getDataUrl: (typeof apiUrls)[keyof typeof apiUrls];
 }
 
 type SortType = 'asc' | 'desc';
 
-const sortCategories = <T extends ICategory>(categories: T[], type: SortType): T[] => (
-    categories.sort((a, b) => {
+const sortCategories = (categories: CategoryType[], type: SortType): CategoryType[] => (
+    [...categories].sort((a, b) => {
         const dateA = new Date(a.created).getTime();
         const dateB = new Date(b.created).getTime();
         if (dateA === dateB) return 0;
         return type === 'asc' ? dateA - dateB : dateB - dateA;
     }));
 
-export const Category = <T extends ICategory>(props: CategoryProps<T>): JSX.Element => {
-    const { title, categories: categoriesFromProps, url } = props;
+export const Category = (props: CategoryProps): JSX.Element => {
+    const { title, url, getDataUrl } = props;
     const [searchParams, setSearchParams] = useSearchParams({ created: 'asc' });
-    const [categories, setCategories] = useState<T[]>(categoriesFromProps);
+    const [categories, setCategories] = useState<CategoryType[]>([]);
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const [pageNumber, setPageNumber] = useState<number>(1);
     const created = searchParams.get('created') as SortType;
 
     useEffect(() => {
-        setCategories(() => sortCategories([...categoriesFromProps], created as SortType));
-    }, [created, categoriesFromProps]);
+        setCategories([]);
+        setPageNumber(1);
+        setHasMore(true);
+    }, [url]);
+
+    const { data, loading } = useGetData<LocationResponse | CharacterResponse | EpisodeResponse>({
+        url: getDataUrl,
+        page: pageNumber,
+    });
+    const observer = useRef<IntersectionObserver | null>(null);
+    const lastItemRef = useCallback((node: HTMLLIElement | null) => {
+        if (loading) return;
+        if (observer.current) {
+            observer.current.disconnect();
+        }
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMore) {
+                setPageNumber((prev) => prev + 1);
+            }
+        });
+        if (node) {
+            observer.current.observe(node);
+        }
+    }, [loading, hasMore]);
+
+    useEffect(() => {
+        if (data?.results) {
+            const newCategories = data.results as unknown as CategoryType[];
+            setCategories((prev) => {
+                const newData = newCategories.filter((item) => !prev.some((existing) => existing.id === item.id));
+                return [...prev, ...newData];
+            });
+        }
+        if (data?.info) {
+            setHasMore(Boolean(data.info.next));
+        }
+    }, [data]);
 
     const handleSortClick = (): void => {
         const newSort = created === 'asc' ? 'desc' : 'asc';
         setSearchParams({ created: newSort });
     };
 
+    const sortedCategories = useMemo(() => sortCategories(categories, created), [categories, created]);
+
     return (
-        <Layout>
-            <main>
-                <h1 className={cls.title}>{title}</h1>
-                <div className={cls.options}>
-                    <button onClick={handleSortClick} className={cls['sort-button']} type='button'>
-                        Дата создания
-                        <Sort />
-                    </button>
-                </div>
-                <ul className={cls.container}>
-                    {categories.map((category: T) => (
-                        <li key={category.id} className={cls.item}>
-                            <Link
-                                key={category.id}
-                                to={generatePath(url, { id: category.id.toString() })}
-                            >
-                                {category.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </main>
-        </Layout>
+        <main>
+            <h1 className={cls.title}>{title}</h1>
+            <div className={cls.options}>
+                <Button onClick={handleSortClick} text='Дата создания'>
+                    <Sort />
+                </Button>
+            </div>
+            <ErrorBoundary>
+                <ItemsList
+                    ref={lastItemRef}
+                    items={sortedCategories}
+                    url={url}
+                />
+            </ErrorBoundary>
+            {loading && <Loader />}
+        </main>
     );
 };
